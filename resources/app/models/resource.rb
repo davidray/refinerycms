@@ -1,7 +1,7 @@
 class Resource < ActiveRecord::Base
 
   # What is the max resource size a user can upload
-  MAX_SIZE_IN_MB = 50
+  MAX_SIZE_IN_MB = 200
 
   resource_accessor :file
 
