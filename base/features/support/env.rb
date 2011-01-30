@@ -24,8 +24,6 @@ def setup_environment
   require 'capybara/cucumber'
   require 'capybara/session'
 
-  include Devise::Controllers::UrlHelpers
-
   # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
   # order to ease the transition to Capybara we set the default here. If you'd
   # prefer to use XPath just remove this line and adjust any selectors in your
@@ -66,6 +64,11 @@ def each_run
   require 'fileutils'
   require 'rails/generators'
   #require 'rails/generators/scripts/generate'
+
+  require 'authlogic/test_case'
+  Before do
+    activate_authlogic
+  end
 end
 
 unless RbConfig::CONFIG["host_os"] =~ %r!(msdos|mswin|djgpp|mingw)!

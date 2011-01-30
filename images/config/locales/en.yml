@@ -3,6 +3,9 @@ en:
     refinery_images:
       title: Images
       description: Manage images
+  image_specify_for_upload: You must specify an image for upload
+  image_should_be_smaller_than_max_image_size: Image should be smaller than %{max_image_size} in size
+  image_must_be_these_formats: 'Your image must be either a JPG, PNG or GIF'
   admin:
     images:
       delete: Remove this image forever
@@ -28,14 +31,8 @@ en:
         resize_image: Resize the image?
         size: Size
       insert:
-        existing_image: Library
-        new_image: Upload
+        existing_image: Existing Image
+        new_image: New Image
   activerecord:
     models:
       image: image
-    errors:
-      models:
-        image:
-          blank: You must specify an image for upload
-          too_long: Image should be smaller than %{count} in size
-          incorrect_format: 'Your image must be either a JPG, PNG or GIF'

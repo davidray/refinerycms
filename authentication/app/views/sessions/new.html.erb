@@ -1,23 +1,26 @@
-<% content_for :header, t('.hello_please_sign_in') %>
+<%= form_for(@session, :as => :session, :url => session_path) do |f| -%>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+  <%= render :partial => "/shared/admin/error_messages",
+             :locals => {
+               :object => @session,
+               :include_object_name => true
+             } %>
+
   <div class='field session_username clearfix'>
-    <%= f.label :login %>
-    <%= f.text_field :login, :class => 'larger widest' %>
+    <%= f.label Refinery.authentication_login_field %>
+    <%= f.text_field Refinery.authentication_login_field, :class => 'larger widest' %>
   </div>
   <div class='field session_password clearfix'>
     <%= f.label :password %>
     <%= f.password_field :password, :autocomplete => 'off', :class => 'larger widest' %>
   </div>
   <div class='clearfix'>
-    <% if devise_mapping.rememberable? %>
-      <div class='field remember_me'>
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
-      </div>
-    <% end %>
+    <div class='field remember_me'>
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    </div>
     <div class='field forgot_password'>
-      <%= link_to t('.forgot_password'), new_password_path(resource_name) %>
+      <%= link_to t('.forgot_password'), forgot_users_url %>
     </div>
   </div>
   <%= render :partial => "/shared/admin/form_actions",
@@ -27,3 +30,4 @@
                :hide_cancel => true
              } %>
 <% end -%>
+<% content_for :header, t('.hello_please_sign_in') %>

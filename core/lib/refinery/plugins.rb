@@ -54,19 +54,10 @@ module Refinery
         @registered_plugins ||= self.new
       end
 
-      def activate(name)
-        active << registered[name] if registered[name] && !active[name]
-      end
-
-      def deactivate(name)
-        active.delete_if {|p| p.name == name}
-      end
-
       def set_active(names)
-        @active_plugins = self.new
-
+        active.clear
         names.each do |name|
-          activate(name)
+          active << registered[name] if registered[name]
         end
       end
     end

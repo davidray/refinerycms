@@ -11,8 +11,6 @@ lv:
         cannot_remove_user_plugin_from_current_user: Jūs nevarat dzēst pieeju 'Lietotāju' spraudnim kontam ar kuru pašlaik esat pieslēdzies.
       form:
         blank_password_keeps_current: Atstājot paroles lauku tukšu, tiks paturēta pašreizējā parole
-        plugin_access: Spraudņu piekļuve
-        role_access: Lomu piekļuve
         enable_all: iespējot visu
       index:
         create_new_user: Izveidot jaunu lietotāju
@@ -20,6 +18,7 @@ lv:
         email_user: Sūtīt epastu šim lietotājam
         preview: (%{who}) izveidots %{created_at}
   sessions:
+    login_successful: Autentifikācija noritēja sekmīgi
     new:
       hello_please_sign_in: Sveicināti! Lūdzu, veiciet autentifikāciju.
       sign_in: Ienākt
@@ -38,35 +37,31 @@ lv:
       blank_email: Jūs nenorādījāt epasta adresi.
       email_not_associated_with_account_html: Atvainojiet, epasts '%{email}' nav piesaistīts nevienam kontam.<br />Vai tiešām norādījāt korektu epastu?
       email_reset_sent: Uz jūsu epastu tika izsūtīta vēstule, kura satur saiti, lai atjaunotu paroli.
-      password_encryption: Jums ir jāatjauno parole, jo tika veiktas izmaiņas Refinery paroļu kriptēšanas sistēmā.
     reset:
       code_invalid: Atvainojiet, šim paroles atjaunošanas kodam ir beidzies izmantošanas termiņš vai arī tas nav derīgs. Ja Jums ir radušās problēmas, tad pamēģiniet nokopēt saņemto saiti no epasta un iekopēt to pārluka adrešu laukā vai arī mēģiniet sākt atjuanošanas procesu no sākuma.
       successful: Paroles atjaunošana noritēja sekmīgi priekš '%{email}'
       pick_new_password_for: Izveidojiet jaunu paroli priekš %{email}
       reset_password: Atjaunot paroli
+      password_blank: Norādiet vienādas paroles abos laukos.
   user_mailer:
-    reset_notification:
-      subject: Saite, lai atjaunotu paroli
-      reset_request_received_for: Paroles nomaiņas pieprasījums priekš %{username}
-      visit_this_url: Apmeklējiet šo adresi, lai izveidotu jaunu paroli
-      remain_same_if_no_action: Esošā parole netiks mainīta, ja neveiksiet turpmākās darbības
-  devise:
-    failure:
-      unauthenticated: Pirms turpināt, jums ir jāveic autentifikācija.
-      invalid: Atvainojiet, nepareizs lietotāja vārds/epasts vai parole.
-    sessions:
-      signed_in: Autentifikācija noritēja veiksmīgi.
-  roles:
-    superuser: Superlietotājs
-    refinery: Refinery
+    link_to_reset_your_password: Saite, lai atjaunotu paroli
+  authlogic:
+    error_messages:
+      login_blank: jānorāda obligāti
+      password_blank: jānorāda obligāti
+      login_invalid: should use only letters, numbers, spaces, and .-_@ please.
+      login_invalid: drīkst saturēt tikai burtus, ciparus, atstarpes un .-_@
+      email_invalid: neizskatās pēc epasta adreses.
+      no_authentication_details: Netika norādīta nekāda informācija priekš autentifikācijas.
+    models:
+      user_session: UserSession
+    attributes:
+      user_session:
+        login: Lietotāja vārds
+        email: Epasts
+        password: Parole
+        remember_me: Atcerēties mani
+        incorrect: Atvainojiet, %{login_field} vai parole nav pareiza.
   activerecord:
     models:
       user: lietotājs
-    attributes:
-      user:
-        login: Lietotāja vārds/Epasts
-        username: Lietotāja vārds
-        password: Parole
-        password_confirmation: Parole atkārtoti
-        email: Epasts
-        remember_me: Atcerēties mani

@@ -11,12 +11,10 @@ Refinery also supports Rails 2.x using the [Rails 2.x stable branch](http://gith
 
 ## How to
 
-* __[Install Refinery CMS](http://refinerycms.com/download)__
-* [Update Refinery CMS to the latest version](http://refinerycms.com/guides/how-to-update-refinery-to-the-latest-version)
-* [Install Refinery CMS on Heroku](http://refinerycms.com/guides/how-to-install-refinery-on-heroku)
-* [Run the Refinery CMS test suite](http://refinerycms.com/guides/how-to-test-refinery)
-* __[Contribute to Refinery CMS](http://refinerycms.com/guides/how-to-contribute-to-refinery)__
-* __[Donate to the Refinery CMS core team](http://pledgie.com/campaigns/8431)__
+* __[Install Refinery](http://refinerycms.com/download)__
+* [Update Refinery to the latest version](http://refinerycms.com/guides/how-to-update-refinery-to-the-latest-version)
+* [Install Refinery on Heroku](http://refinerycms.com/guides/how-to-install-refinery-on-heroku)
+* [Run the Refinery test suite](http://refinerycms.com/guides/how-to-test-refinery)
 
 ## Getting Started
 
@@ -110,7 +108,3 @@ to get help on how to use that. Or read the full documentation on [writing engin
 ## License
 
 Refinery is released under the [MIT license](http://github.com/resolve/refinerycms/blob/master/license.md#readme) and is copyright (c) 2005-2010 [Resolve Digital](http://www.resolvedigital.com)
-
-### Credits
-
-Many of the icons used in Refinery CMS are from the wonderful [Silk library by Mark James](http://www.famfamfam.com/lab/icons/silk/).

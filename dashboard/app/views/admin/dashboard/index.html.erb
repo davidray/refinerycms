@@ -37,6 +37,11 @@
         </li>
       <% end %>
       <%= render :partial => 'additional_dashboard_menu_items' %>
+      <li>
+        <%= link_to t('.see_home_page'), root_url,
+                    :class => "go_icon",
+                    :target => "_blank" %>
+      </li>
     </ul>
 
     <% if defined?(::Refinery::I18n) and ::Refinery::I18n.enabled? %>
@@ -48,7 +53,7 @@
           <%= link_to "#", :style => "background-image: url('/images/refinery/icons/flags/#{current_locale}.png');" do %>
             <%= current_locale_title.respond_to?(:force_encoding) ? current_locale_title.force_encoding('utf-8') : current_locale_title %>
             <span><%= t('.change_language') %></span>
-            <span style='display:none;'><%= t('cancel', :scope => 'shared.admin.form_actions') %></span>
+            <span style='display:none;'><%= t('shared.admin.form_actions.cancel') %></span>
           <% end %>
         </li>
       </ul>

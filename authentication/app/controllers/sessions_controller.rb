@@ -1,22 +1,34 @@
-class SessionsController < Devise::SessionsController
+class SessionsController < ApplicationController
   layout 'login'
 
-  before_filter :clear_unauthenticated_flash, :only => [:new]
+  before_filter :redirect?, :only => [:new, :create]
+
+  def new
+    @session = UserSession.new
+  end
 
   def create
-    super
-  rescue BCrypt::Errors::InvalidSalt
-    flash[:error] = t('password_encryption', :scope => 'users.forgot')
-    redirect_to new_user_password_path
+    if (@session = UserSession.create(params[:session])).valid?
+      flash.notice = t('sessions.login_successful') if refinery_user?
+      redirect_back_or_default(admin_root_url)
+    else
+      render :action => 'new'
+    end
+  end
+
+  def destroy
+    current_user_session.destroy if logged_in?
+
+    redirect_to(root_url)
   end
 
 protected
-  # We don't like this alert.
-  def clear_unauthenticated_flash
-    if flash.keys.include?(:alert) and flash.values.any?{|v|
-      ['unauthenticated', t('unauthenticated', :scope => 'devise.failure')].include?(v)
-    }
-      flash.delete(:alert)
+
+  def redirect?
+    if refinery_user?
+      redirect_to admin_root_url
+    elsif logged_in?
+      redirect_to root_url
     end
   end
 

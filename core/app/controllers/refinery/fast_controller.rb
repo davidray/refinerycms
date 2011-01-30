@@ -1,9 +1,7 @@
-module Refinery
-  class FastController < ActionController::Base
+class Refinery::FastController < ActionController::Base
 
-    def wymiframe
-      render :template => "/wymiframe", :layout => false
-    end
-
+  def wymiframe
+    render :template => "/wymiframe", :layout => false
   end
+
 end

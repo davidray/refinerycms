@@ -1,12 +1,6 @@
-<p>
-  <%= t('reset_request_received_for', :scope => 'user_mailer.reset_notification', :username => @user.username) %>
-</p>
-<p>
-  <%= t('visit_this_url', :scope => 'user_mailer.reset_notification') %>:
-</p>
-<p>
+Request to reset password received for <%= @user.login %>
+
+Visit this url to choose a new password:
   <%= @url %>
-</p>
-<p>
-  (<%= t('remain_same_if_no_action', :scope => 'user_mailer.reset_notification') %>)
-</p>
+
+(Your password will remain the same if no action is taken)

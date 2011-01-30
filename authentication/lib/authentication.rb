@@ -1,4 +1,5 @@
 require 'refinery'
+require 'authlogic'
 
 module Refinery
   module Authentication
@@ -9,7 +10,7 @@ module Refinery
       config.after_initialize do
         Refinery::Plugin.register do |plugin|
           plugin.name = "refinery_users"
-          plugin.version = %q{0.9.9}
+          plugin.version = %q{0.9.8}
           plugin.menu_match = /(refinery|admin)\/users$/
           plugin.activity = {
             :class => User,

@@ -43,6 +43,5 @@ WYMeditor.STRINGS['da'] = {
   Classes:          'Klasser',
   Status:           'Status',
   Source_Code:      'Kilde kode',
-  Css_Class:        'Tilføj CSS klasse',
-  Apply_Style:      'Formatér'
+  Css_Class:        'Tilføj CSS klasse'
 };

@@ -5,49 +5,36 @@ class Resource < ActiveRecord::Base
 
   resource_accessor :file
 
-  validates :file, :presence => {},
-                   :length   => { :maximum => MAX_SIZE_IN_MB.megabytes }
+  validates :file, :presence => { :message => I18n.t('file_specify_for_upload') },
+                   :length   => { :maximum => MAX_SIZE_IN_MB.megabytes,
+                                  :message => I18n.t('file_should_be_smaller_than_max_file_size',
+                                                     :max_file_size => MAX_SIZE_IN_MB.megabytes) }
 
    # Docs for acts_as_indexed http://github.com/dougal/acts_as_indexed
    acts_as_indexed :fields => [:file_name, :title, :type_of_content]
 
-  # when a dialog pops up with resources, how many resources per page should there be
+  # when a dialog pops up with images, how many images per page should there be
   PAGES_PER_DIALOG = 12
 
-  # when listing resources out in the admin area, how many resources should show per page
+  # when listing images out in the admin area, how many images should show per page
   PAGES_PER_ADMIN_INDEX = 20
 
   delegate :ext, :size, :mime_type, :url, :to => :file
 
+  # How many images per page should be displayed?
+  def self.per_page(dialog = false)
+    dialog ? PAGES_PER_DIALOG : PAGES_PER_ADMIN_INDEX
+  end
+
   # used for searching
   def type_of_content
-    mime_type.split("/").join(" ")
+    self.mime_type.split("/").join(" ")
   end
 
   # Returns a titleized version of the filename
   # my_file.pdf returns My File
   def title
-    CGI::unescape(file_name.to_s).gsub(/\.\w+$/, '').titleize
+    CGI::unescape(self.file_name.to_s).gsub(/\.\w+$/, '').titleize
   end
 
-  class << self
-    # How many resources per page should be displayed?
-    def per_page(dialog = false)
-      dialog ? PAGES_PER_DIALOG : PAGES_PER_ADMIN_INDEX
-    end
-
-    def create_resources(params)
-      resources = []
-
-      unless params.present? and params[:file].is_a?(Array)
-        resources << create(params)
-      else
-        params[:file].each do |resource|
-          resources << create(:file => resource)
-        end
-      end
-
-      resources
-    end
-  end
 end

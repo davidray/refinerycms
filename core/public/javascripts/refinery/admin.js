@@ -6,7 +6,7 @@ $(document).ready(function(){
   init_submit_continue();
   init_modal_dialogs();
   init_tooltips();
-  init_ajaxy_pagination();
+  init_refinery_settings_ajaxy_pagination();
 });
 
 if(typeof(window.onpopstate) == "object"){
@@ -23,41 +23,22 @@ if(typeof(window.onpopstate) == "object"){
 
 $.fn.slideTo = function(response) {
   $(this).html(response);
-  $(this).applyMinimumHeightFromChildren();
-  $(this).find('.pagination_frame').removeClass('frame_right').addClass('frame_center');
+  $('#frame').removeClass('frame_right').addClass('frame_center');
   init_modal_dialogs();
-  init_tooltips();
-  return $(this);
 }
 
-$.fn.applyMinimumHeightFromChildren = function() {
-  child_heights = 0;
-  $(this).children().each(function(i, child){
-    child_heights += $(child).height();
-    $.each(['marginTop', 'marginBottom', 'paddingTop', 'paddingBottom'], function(i, attr) {
-      child_heights += (parseInt($(child).css(attr)) || 0);
-    });
-  });
-  $(this).css('min-height', child_heights);
-  return $(this);
-}
-
-init_ajaxy_pagination = function(){
+init_refinery_settings_ajaxy_pagination = function(){
   if(typeof(window.history.pushState) == 'function' && $('.pagination_container').length > 0){
-    var pagination_pages = $('.pagination_container .pagination a');
-    pagination_pages.live('click',function(e) {
+    var settings_pages = $('.pagination_container .pagination a');
+    settings_pages.live('click',function(e) {
       this.href = (this.href.replace(/(\&(amp\;)?)?from_page\=\d+/, '')
                    + '&from_page=' + $(this).parent().find('em').text()).replace('?&', '?');
       history.pushState({ path: this.path }, '', this.href);
       $.get(this.href, function(data) {
-        $('.pagination_container').slideTo(data)
+        $('.pagination_container').slideTo(data);
       })
-      e.preventDefault();
+      return false;
     });
-  }
-  $('.pagination_container').applyMinimumHeightFromChildren();
-  if ($('.pagination_container').find('.pagination').length == 0) {
-    $('.pagination_frame').css('top', '0px');
   }
 }
 
@@ -144,10 +125,6 @@ init_interface = function() {
 
   $('.form-actions .form-actions-left input:submit#submit_button').click(function(e) {
     $("<img src='/images/refinery/icons/ajax-loader.gif' width='16' height='16' class='save-loader' />").appendTo($(this).parent());
-  });
-
-  $('a.suppress').live('click', function(e){
-    e.preventDefault();
   });
 };
 
@@ -298,85 +275,83 @@ init_tooltips = function(args){
   {
     // create tooltip on hover and destroy it on hoveroff.
     $(element).hover(function(e) {
-      if (e.type == 'mouseenter' || e.type == 'mouseover') {
-        $(this).oneTime(350, 'tooltip', $.proxy(function() {
-          $('.tooltip').remove();
-          tooltip = $("<div class='tooltip'><div><span></span></div></div>").appendTo('#tooltip_container');
-          tooltip.find("span").html($(this).attr('tooltip'));
-          if(!$.browser.msie) {
-            tooltip.corner('6px').find('span').corner('6px');
-          }
+      $(this).oneTime(350, 'tooltip', $.proxy(function() {
+        $('.tooltip').remove();
+        tooltip = $("<div class='tooltip'><div><span></span></div></div>").appendTo('#tooltip_container');
+        tooltip.find("span").html($(this).attr('tooltip'));
+        if(!$.browser.msie) {
+          tooltip.corner('6px').find('span').corner('6px');
+        }
 
-          tooltip_nib_image = $.browser.msie ? 'tooltip-nib.gif' : 'tooltip-nib.png';
-          nib = $("<img src='/images/refinery/"+tooltip_nib_image+"' class='tooltip-nib'/>").appendTo('#tooltip_container');
+        tooltip_nib_image = $.browser.msie ? 'tooltip-nib.gif' : 'tooltip-nib.png';
+        nib = $("<img src='/images/refinery/"+tooltip_nib_image+"' class='tooltip-nib'/>").appendTo('#tooltip_container');
 
-          tooltip.css({
-            'opacity': 0
-            , 'maxWidth': '300px'
-          });
-          required_left_offset = $(this).offset().left - (tooltip.outerWidth() / 2) + ($(this).outerWidth() / 2);
-          tooltip.css('left', (required_left_offset > 0 ? required_left_offset : 0));
+        tooltip.css({
+          'opacity': 0
+          , 'maxWidth': '300px'
+        });
+        required_left_offset = $(this).offset().left - (tooltip.outerWidth() / 2) + ($(this).outerWidth() / 2);
+        tooltip.css('left', (required_left_offset > 0 ? required_left_offset : 0));
 
-          var tooltip_offset = tooltip.offset();
-          var tooltip_outer_width = tooltip.outerWidth();
-          if (tooltip_offset && (tooltip_offset.left + tooltip_outer_width) > (window_width = $(window).width())) {
-            tooltip.css('left', window_width - tooltip_outer_width);
-          }
+        var tooltip_offset = tooltip.offset();
+        var tooltip_outer_width = tooltip.outerWidth();
+        if (tooltip_offset && (tooltip_offset.left + tooltip_outer_width) > (window_width = $(window).width())) {
+          tooltip.css('left', window_width - tooltip_outer_width);
+        }
 
-          tooltip.css({
-            'top': $(this).offset().top - tooltip.outerHeight() - 2
-          });
+        tooltip.css({
+          'top': $(this).offset().top - tooltip.outerHeight() - 2
+        });
 
+        nib.css({
+          'opacity': 0
+        });
+
+        if (tooltip_offset = tooltip.offset()) {
           nib.css({
-            'opacity': 0
+            'left': $(this).offset().left + ($(this).outerWidth() / 2) - 5
+            , 'top': tooltip_offset.top + tooltip.height()
           });
-
-          if (tooltip_offset = tooltip.offset()) {
-            nib.css({
-              'left': $(this).offset().left + ($(this).outerWidth() / 2) - 5
-              , 'top': tooltip_offset.top + tooltip.height()
-            });
-          }
-
-          try {
-            tooltip.animate({
-              top: tooltip_offset.top - 10
-              , opacity: 1
-            }, 200, 'swing');
-            nib.animate({
-              top: nib.offset().top - 10
-              , opacity: 1
-            }, 200);
-          } catch(e) {
-            tooltip.show();
-            nib.show();
-          }
-        }, $(this)));
-      } else if (e.type == 'mouseleave' || e.type == 'mouseout') {
-        $(this).stopTime('tooltip');
-        if ((tt_offset = (tooltip = $('.tooltip')).css('z-index', '-1').offset()) == null) {
-          tt_offset = {'top':0,'left':0};
         }
-        tooltip.animate({
-          top: tt_offset.top - 20
-          , opacity: 0
-        }, 125, 'swing', function(){
-          $(this).remove();
-        });
-        if ((nib_offset = (nib = $('.tooltip-nib')).offset()) == null) {
-          nib_offset = {'top':0,'left':0};
+
+        try {
+          tooltip.animate({
+            top: tooltip_offset.top - 10
+            , opacity: 1
+          }, 200, 'swing');
+          nib.animate({
+            top: nib.offset().top - 10
+            , opacity: 1
+          }, 200);
+        } catch(e) {
+          tooltip.show();
+          nib.show();
         }
-        nib.animate({
-          top: nib_offset.top - 20
-          , opacity: 0
-        }, 125, 'swing', function(){
-          $(this).remove();
-        });
+      }, $(this)));
+
+    }, function(e) {
+      $(this).stopTime('tooltip');
+      if ((tt_offset = (tooltip = $('.tooltip')).css('z-index', '-1').offset()) == null) {
+        tt_offset = {'top':0,'left':0};
       }
+      tooltip.animate({
+        top: tt_offset.top - 20
+        , opacity: 0
+      }, 125, 'swing', function(){
+        $(this).remove();
+      });
+      if ((nib_offset = (nib = $('.tooltip-nib')).offset()) == null) {
+        nib_offset = {'top':0,'left':0};
+      }
+      nib.animate({
+        top: nib_offset.top - 20
+        , opacity: 0
+      }, 125, 'swing', function(){
+        $(this).remove();
+      });
     }).click(function(e) {
       $(this).stopTime('tooltip');
     });
-
     if ($(element).attr('tooltip') == null) {
       $(element).attr('tooltip', $(element).attr('title'));
     }
@@ -504,7 +479,7 @@ var link_dialog = {
   },
 
   init_close: function(){
-    $('.form-actions-dialog #cancel_button').not('.wym_iframe_body .form-actions-dialog #cancel_button').click(close_dialog);
+    $('.form-actions-dialog #cancel_button').click(close_dialog);
 
     if (parent
         && parent.document.location.href != document.location.href
@@ -609,6 +584,8 @@ var page_options = {
   initialised: false
   , init: function(enable_parts, new_part_url, del_part_url){
     // set the page tabs up, but ensure that all tabs are shown so that when wymeditor loads it has a proper height.
+    // also disable page overflow so that scrollbars don't appear while the page is loading.
+    $(document.body).not('iframe body').addClass('hide-overflow');
     page_options.tabs = $('#page-tabs');
     page_options.tabs.tabs({tabTemplate: '<li><a href="#{href}">#{label}</a></li>'});
     page_options.tabs.find(' > ul li a').corner('top 5px');
@@ -622,11 +599,13 @@ var page_options = {
     this.show_options();
     this.title_type();
 
-    $(document).ready($.proxy(function(){
-      // hide the tabs that are supposed to be hidden.
-      $('#page-tabs .page_part.field').not(this).addClass('ui-tabs-hide');
+    // Hook into the loaded function. This will be called when WYMeditor has done its thing.
+    WYMeditor.loaded = function(){
+      // hide the tabs that are supposed to be hidden and re-enable overflow.
+      $(document.body).removeClass('hide-overflow');
+      $('#page-tabs .page_part.field').not(part_shown).addClass('ui-tabs-hide');
       $('#page-tabs > ul li a').corner('top 5px');
-    }, part_shown));
+    };
 
     if(this.enable_parts){
       this.page_part_dialog();
@@ -693,9 +672,10 @@ var page_options = {
               $('#page_parts_attributes_' + $('#new_page_part_index').val() + "_body").wymeditor(wymeditor_boot_options);
 
               // hook into wymedtior to instruct it to select this new tab again once it has loaded.
-              WYMeditor.onload_functions.push(function() {
+              WYMeditor.loaded = function() {
                 page_options.tabs.tabs('select', $('#new_page_part_index').val());
-              });
+                WYMeditor.loaded = function(){}; // kill it again.
+              };
 
               // Wipe the title and increment the index counter by one.
               $('#new_page_part_index').val(parseInt($('#new_page_part_index').val(), 10) + 1);
@@ -824,16 +804,8 @@ var image_dialog = {
 
   , init_actions: function(){
     var _this = this;
-    // get submit buttons not inside a wymeditor iframe
-    $('#existing_image_area .form-actions-dialog #submit_button')
-      .not('.wym_iframe_body #existing_image_area .form-actions-dialog #submit_button')
-      .click($.proxy(_this.submit_image_choice, _this));
-
-    // get cancel buttons not inside a wymeditor iframe
-    $('.form-actions-dialog #cancel_button')
-      .not('.wym_iframe_body .form-actions-dialog #cancel_button')
-      .click($.proxy(close_dialog, _this));
-
+    $('#existing_image_area .form-actions-dialog #submit_button').click($.proxy(_this.submit_image_choice, _this));
+    $('.form-actions-dialog #cancel_button').not('body.wym_iframe_body .form-actions-dialog #cancel_button').click($.proxy(close_dialog, _this));
     $('#existing_image_size_area ul li a').click(function(e) {
       $('#existing_image_size_area ul li').removeClass('selected');
       $(this).parent().addClass('selected');
@@ -841,7 +813,6 @@ var image_dialog = {
       image_dialog.set_image($('#existing_image_area_content ul li.selected img'));
       e.preventDefault();
     });
-
     $('#existing_image_size_area #wants_to_resize_image').change(function(){
       if($(this).is(":checked")) {
         $('#existing_image_size_area ul li:first a').click();
@@ -851,12 +822,14 @@ var image_dialog = {
       }
     });
 
-    image_area = $('#existing_image_area').not('#wym_iframe_body #existing_image_area');
-    image_area.find('.form-actions input#submit_button').click($.proxy(function(e) {
-      e.preventDefault();
-      $(this.document.getElementById('wym_dialog_submit')).click();
-    }, parent));
-    image_area.find('.form-actions a.close_dialog').click(close_dialog);
+    if (parent && parent.document.location.href != document.location.href
+        && parent.document.getElementById('wym_dialog_submit') != null) {
+      $('#existing_image_area .form-actions input#submit_button').click($.proxy(function(e) {
+        e.preventDefault();
+        $(this.document.getElementById('wym_dialog_submit')).click();
+      }, parent));
+      $('#existing_image_area .form-actions a.close_dialog').click(close_dialog);
+    }
   }
 };
 

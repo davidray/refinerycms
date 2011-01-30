@@ -2,7 +2,7 @@
   <div class='clearfix'>
     <span class='title'>
       <%= page.title_with_meta.html_safe %>
-      <% if defined?(::Refinery::I18n) and ::Refinery::I18n.frontend_locales.many? and
+      <% if ::Refinery::I18n.frontend_locales.many? and
             (locales = page.translations.collect{|t| t.locale}).present? %>
         <span class='preview'>
           <% locales.each do |locale| %>
@@ -17,11 +17,11 @@
                   :target => "_blank",
                   :title => t('.view_live_html') %>
       <%= link_to refinery_icon_tag('application_edit.png'), edit_admin_page_url(page),
-                  :title => t('edit', :scope => 'admin.pages') %>
+                  :title => t('admin.pages.edit') %>
       <%= link_to refinery_icon_tag('delete.png'), admin_page_url(page),
                   :class => "cancel confirm-delete",
-                  :title => t('delete', :scope => 'admin.pages'),
-                  :confirm => t('message', :scope => 'shared.admin.delete', :title => page.title_with_meta.gsub(/\ ?<em>.*<\/em>/, "")),
+                  :title => t('admin.pages.delete'),
+                  :confirm => t('shared.admin.delete.message', :title => page.title_with_meta.gsub(/\ ?<em>.*<\/em>/, "")),
                   :method => :delete if page.deletable? %>
     </span>
   </div>

@@ -1,11 +1,5 @@
 class TranslatePagePlugin < ActiveRecord::Migration
   def self.up
-    PagePart.create_translation_table!({
-      :body => :text
-    }, {
-      :migrate_data => true
-    })
-
     Page.create_translation_table!({
       :title => :string,
       :meta_keywords => :string,
@@ -15,15 +9,15 @@ class TranslatePagePlugin < ActiveRecord::Migration
       :migrate_data => true
     })
 
-    if (seed_file = Rails.root.join('db', 'seeds', 'pages.rb')).file?
-      load seed_file.to_s unless Page.where(:link_url => '/').any?
-    end
-
-    Slug.update_all(:locale => ::I18n.locale)
+    PagePart.create_translation_table!({
+      :body => :text
+    }, {
+      :migrate_data => true
+    })
   end
 
   def self.down
-    Page.drop_translation_table! :migrate_data => true
-    PagePart.drop_translation_table! :migrate_data => true
+    Page.drop_translation_table!
+    PagePart.drop_translation_table!
   end
 end

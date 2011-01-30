@@ -13,8 +13,12 @@ Gem::Specification.new do |s|
   s.homepage    = %q{http://refinerycms.com}
   s.authors     = ['Resolve Digital', 'David Jones', 'Philip Arndt']
 
-  s.files       = Dir['**/*'] - Dir['*.gemspec']
+  s.files       = Dir['crud.md', 'engines.md', 'license.md', 'lib/**/*', 'config/**/*', 'app/**/*']
   s.require_path = 'lib'
 
   s.add_dependency('refinerycms-base', version)
+  s.add_dependency('refinerycms-authentication', version)
+  s.add_dependency('refinerycms-dashboard', version)
+  s.add_dependency('refinerycms-pages', version)
+  s.add_dependency('refinerycms-settings', version)
 end
