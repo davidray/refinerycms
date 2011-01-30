@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class Image < ActiveRecord::Base
 
   # What is the max image size a user can upload
@@ -5,12 +7,10 @@ class Image < ActiveRecord::Base
 
   image_accessor :image
 
-  validates :image, :presence  => { :message => ::I18n.t('image_specify_for_upload') },
-                    :length    => { :maximum => MAX_SIZE_IN_MB.megabytes,
-                                    :message => ::I18n.t('image_should_be_smaller_than_max_image_size',
-                                                         :max_image_size => MAX_SIZE_IN_MB.megabytes) }
-  validates_property :mime_type, :of => :image, :in => %w(image/jpeg image/png image/gif),
-                     :message => ::I18n.t('image_must_be_these_formats')
+  validates :image, :presence  => {},
+                    :length    => { :maximum => MAX_SIZE_IN_MB.megabytes }
+  validates_property :mime_type, :of => :image, :in => %w(image/jpeg image/png image/gif image/tiff),
+                     :message => :incorrect_format
 
   # Docs for acts_as_indexed http://github.com/dougal/acts_as_indexed
   acts_as_indexed :fields => [:title]
@@ -46,27 +46,27 @@ class Image < ActiveRecord::Base
         :small => '110x110>',
         :medium => '225x255>',
         :large => '450x450>'
-      })
+      }, :destroyable => false)
     end
   end
 
   # Get a thumbnail job object given a geometry.
   def thumbnail(geometry = nil)
     if geometry.is_a?(Symbol) and self.class.user_image_sizes.keys.include?(geometry)
-      geometry = sizes[geometry].presence
+      geometry = self.class.user_image_sizes[geometry]
     end
 
     if geometry.present? && !geometry.is_a?(Symbol)
-      self.image.thumb(geometry)
+      image.thumb(geometry)
     else
-      self.image
+      image
     end
   end
 
   # Returns a titleized version of the filename
   # my_file.jpg returns My File
   def title
-    CGI::unescape(self.image_name.to_s).gsub(/\.\w+$/, '').titleize
+    CGI::unescape(image_name.to_s).gsub(/\.\w+$/, '').titleize
   end
 
 end

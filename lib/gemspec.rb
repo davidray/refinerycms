@@ -1,22 +1,20 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../lib/refinery.rb', __FILE__)
-files = %w( .gitignore .yardopts Gemfile *.md ).map { |file| Dir[file] }.flatten
-%w(app bin config db features lib public script spec test themes vendor).sort.each do |dir|
-  files += Dir.glob("#{dir}/**/*")
-end
+files = %w( Gemfile *.md **/**/{*,.rspec,.gitignore,.yardopts} ).map { |file| Dir.glob(file) }.flatten.sort
 rejection_patterns = [
-  "public\/system",
-  "^config\/(application|boot|environment).rb$",
-  "^config\/initializers(\/.*\.rb)?$",
-  "^config\/(database|i18n\-js).yml$",
-  "^public\/",
+  "^public/system",
+  "^config/(application|boot|environment).rb$",
+  "^config/initializers(\/.*\.rb)?$",
+  "^config/(database|i18n\-js).yml$",
   "^lib\/gemspec\.rb",
   ".*\/cache\/",
-  "^db\/(schema.rb|.*\.sqlite3?(-journal)?)$",
+  "^db\/(schema|seeds|.*\.sqlite3?(-journal)?|migrate)(\/?.*\.rb)?$",
   "^script\/*",
   "^vendor\/plugins\/?$",
-  "\.log$",
-  "\.rbc$"
+  "(^log|\.log)$",
+  "\.rbc$",
+  "^tmp(|/.+?)$",
+  ".gem$"
 ]
 
 files.reject! do |f|
@@ -41,29 +39,28 @@ Gem::Specification.new do |s|
   s.executables       = %w(#{Dir.glob('bin/*').map{|d| d.gsub('bin/','')}.join(' ')})
 
   s.add_dependency    'acts_as_indexed',             '~> 0.6.6'
-  s.add_dependency    'authlogic',                   '~> 2.1.6'
   s.add_dependency    'bundler',                     '~> 1.0.5'
-  s.add_dependency    'dragonfly',                   '~> 0.8.1'
-  s.add_dependency    'friendly_id',                 '~> 3.1.8'
-  s.add_dependency    'globalize3'
+  s.add_dependency    'devise',                      '~> 1.1'
+  s.add_dependency    'dragonfly',                   '~> 0.8.2'
+  s.add_dependency    'friendly_id_globalize3',      '~> 3.2.0'
+  s.add_dependency    'globalize3',                  '>= 0.1.0.beta'
   s.add_dependency    'moretea-awesome_nested_set',  '= 1.4.3.1'
   s.add_dependency    'rack-cache',                  '~> 0.5.2'
   s.add_dependency    'rails',                       '~> 3.0.3'
   s.add_dependency    'rdoc',                        '>= 2.5.11' # helps fix ubuntu
-  s.add_dependency    'truncate_html',               '= 0.4'
+  s.add_dependency    'truncate_html',               '~> 0.5'
   s.add_dependency    'will_paginate',               '~> 3.0.pre'
 
   s.add_development_dependency 'rspec-rails',        '~> 2.3'
   # Cucumber
-  s.add_development_dependency 'capybara'
+  s.add_development_dependency 'capybara',           '>= 0.4.1.rc'
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'cucumber-rails'
   s.add_development_dependency 'cucumber'
   s.add_development_dependency 'launchy'
   s.add_development_dependency 'gherkin'
   s.add_development_dependency 'rack-test',          '~> 0.5.6'
-  # FIXME: Update json_pure to 1.4.7 when it is released
-  s.add_development_dependency 'json_pure',          '~> 1.4.6'
+  s.add_development_dependency 'json_pure'
   # Factory Girl
   s.add_development_dependency 'factory_girl'
   # Autotest

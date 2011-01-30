@@ -1,4 +1,4 @@
-## 0.9.9 [Unreleased]
+## 0.9.9 [27 January 2011]
 
 * Better, more semantic HTML5. [Joe Sak](https://github.com/joemsak)
 * Added ``role`` selection for ``admin/users#edit``. [Hez Ronningen](https://github.com/hez)
@@ -28,6 +28,19 @@
 * Improved client-side responsiveness of backend and frontend. [Philip Arndt](https://github.com/parndt)
 * No more RMagick dependency [Philip Arndt](https://github.com/parndt)
 * Added ``rake refinery:override stylesheet=somefile`` and ``rake refinery:override javascript=somefile`` commands to override stylesheets and javascripts. [Oliver Ponder](https://github.com/oponder)
+* Restructed the project to remove ``vendor/refinerycms`` and put all engines in the application root. [Kamil K. Lemański](https://github.com/kml)
+* Force no resource caching on non-writable file systems (like Heroku). [Philip Arndt](https://github.com/parndt)
+* Refinery can now attach itself to a Rails application simply by including the refinerycms gem in the ``Gemfile``. [Philip Arndt](https://github.com/parndt)
+* Added core support for ``globalize3`` so that pages can be translated into multiple languages. [Philip Arndt](https://github.com/parndt) and [Maarten Hoogendoorn](https://github.com/moretea)
+* Refactored ``group_by_date`` into a helper method which is called in the view layer and not in the controller because it is entirely presentation. [Philip Arndt](https://github.com/parndt)
+* Applied HTML5 history pagination to all core engines. [Philip Arndt](https://github.com/parndt)
+* Converted translate calls to use ``:scope``. [Uģis Ozols](https://github.com/ugisozols)
+* Fixed issues where errors would only show up in English for some models and updated Russian translations. [Semyon Perepelitsa](https://github.com/semaperepelitsa)
+* Converted to devise for authentication, requiring password resets. [Philip Arndt](https://github.com/parndt) and [Uģis Ozols](https://github.com/ugisozols)
+* Sped up WYMeditor load times. [Philip Arndt](https://github.com/parndt)
+* Fixed several issues for Internet Explorer. [Josef Šimánek](https://github.com/simi)
+* Added installation option for [Duostack](http://duostack.com) hosting service. [Philip Arndt](https://github.com/parndt) and [David E. Chen](https://github.com/dchen)
+
 * [See full list](https://github.com/resolve/refinerycms/compare/0.9.8.9...0.9.9)
 
 ## 0.9.8.9 [21 December 2010]

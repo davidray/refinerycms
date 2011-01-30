@@ -2,6 +2,7 @@ nl:
   plugins:
     refinery_users:
       title: Gebruikers
+      describe: Beheer gebruikers
   admin:
     users:
       delete: Verwijder deze gebruiker voorgoed
@@ -10,16 +11,15 @@ nl:
         cannot_remove_user_plugin_from_current_user: "U kunt de 'Gebruikers' plugin niet deactiveren voor uw huidige ingelogde account."
       form:
         blank_password_keeps_current: Als u dit veld leeg laat, blijft het oude wachtwoord behouden.
-        enable_all: Maak alle beschikbaar
+        plugin_access: Toegang tot een plugin
+        role_access: Rol toegang
+        enable_all: maak alles beschikbaar
       index:
         create_new_user: Maak een nieuwe gebruiker
-        no_users_yet:  Er zijn nog geen gebruikers. Klik op "Maak een nieuwe gebruiker" om de eerste toe te voegen.
       user:
         email_user: Email deze gebruiker
         preview: (%{who}) is aangemaakt op %{created_at}
   sessions:
-    login_successful: Successvol ingelogd.
-    login_failed: Sorry, uw wachtwoord of gebruikersnaam was niet juist.
     new:
       hello_please_sign_in: Hallo! Log in om verder te kunnen.
       sign_in: Log in
@@ -38,29 +38,33 @@ nl:
       blank_email: Je hebt geen e-mail adres.
       email_not_associated_with_account_html: "Sorry, '%{email}' is niet geassocieerd met alle rekeningen. <br/>Weet u zeker dat u typte het juiste e-mailadres?"
       email_reset_sent: Een e-mail is naar u verzonden met een link om je wachtwoord te resetten.
+      password_encryption: Je moet je wachtwoord resetten, omdat er wijzigingen zijn gemaakt in de cryptografische methoden waarop wachtwoorden worden opgeslagen, zodat ze nog veilger bewaard worden.
     reset:
       code_invalid: "Het spijt ons, maar dit reset code is verlopen of ongeldig. Als u problemen hebt proberen te kopiëren en plakken van de URL van uw e-mail in uw browser of het herstarten van de reset wachtwoord proces."
       successful: "Wachtwoord resetten succes voor %{email}"
       pick_new_password_for: Kiees een nieuw wachtwoord voor %{email}
       reset_password: Reset het wachtwoord
-      password_blank: Vul de bevestiging in met hetzelfde wachtwoord
   user_mailer:
-    link_to_reset_your_password: Link om uw wachtwoord te resetten
-  authlogic:
-    error_messages:
-      login_blank: mag niet leeg zijn
-      login_invalid: moet gebruik alleen letters, cijfers, spaties en .- _ @ gelieve
-      email_invalid: eruit moet zien als een e-mail adres.
-      no_authentication_details: U heeft niet alle details voor authenticatie.
+    reset_notification:
+      subject: Link om uw wachtwoord te resetten
+      reset_request_received_for: Aanvraag om het wachtwoord te resetten ontvangen voor %{username}
+      visit_this_url: Bezoek dit adres om een nieuw wachtwoord in te stellen
+      remain_same_if_no_action: Je wachtwoord blijft hetzelfde, als je niet op dit bericht reageert
+  devise:
+    failure:
+      unauthenticated: Je moet inloggen om verder te kunnen
+      invalid: Sorry, je wachtwoord, of gebruikersnaam is onjuist.
+    sessions:
+      signed_in: Je bent ingelogd.
+  roles:
+    superuser: Beheerder
+    refinery: Refinery gebruiker
+  activerecord:
     models:
-      user_session: UserSession
+      user: gebruiker
     attributes:
-      user_session:
+      user:
         login: Gebruikersnaam
         email: e-mail
         password: Wachtwoord
         remember_me: Onthoud mijn gegevens
-        incorrect: "Sorry, uw %{login_field} of wachtwoord was niet juist."
-  activerecord:
-    models:
-      user: gebruiker

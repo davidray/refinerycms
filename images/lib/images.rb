@@ -11,10 +11,8 @@ module Refinery
         app_images.configure_with(:rails) do |c|
           c.datastore.root_path = Rails.root.join('public', 'system', 'images').to_s
           c.url_path_prefix = '/system/images'
-          if RefinerySetting.table_exists?
-            c.secret = RefinerySetting.find_or_set(:dragonfly_secret,
-                                                   Array.new(24) { rand(256) }.pack('C*').unpack('H*').first)
-          end
+          c.secret = RefinerySetting.find_or_set(:dragonfly_secret,
+                                                Array.new(24) { rand(256) }.pack('C*').unpack('H*').first)
         end
         app_images.configure_with(:heroku, ENV['S3_BUCKET']) if Refinery.s3_backend
 
@@ -30,7 +28,8 @@ module Refinery
         # /system/images/BAhbB1sHOgZmIiMyMDEwLzA5LzAxL1NTQ19DbGllbnRfQ29uZi5qcGdbCDoGcDoKdGh1bWIiDjk0MngzNjAjYw/refinery_is_awesome.jpg
         # Officially the way to do it, from: http://markevans.github.com/dragonfly/file.URLs.html
         app_images.url_suffix = proc{|job|
-          "/#{job.uid_basename}#{job.encoded_extname || job.uid_extname}"
+          object_file_name = job.uid_basename.gsub(%r{^(\d{4}|\d{2})[_/]\d{2}[_/]\d{2}[_/]\d{2,3}[_/](\d{2}/\d{2}/\d{3}/)?}, '')
+          "/#{object_file_name}#{job.encoded_extname || job.uid_extname}"
         }
 
         ### Extend active record ###
@@ -48,7 +47,7 @@ module Refinery
         Refinery::Plugin.register do |plugin|
           plugin.name = "refinery_images"
           plugin.directory = "images"
-          plugin.version = %q{0.9.8}
+          plugin.version = %q{0.9.9}
           plugin.menu_match = /(refinery|admin)\/image(_dialog)?s$/
           plugin.activity = {
             :class => Image
