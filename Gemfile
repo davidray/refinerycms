@@ -34,7 +34,7 @@ gem 'refinerycms',              :path => '.'
 gem 'friendly_id',              :git => 'git://github.com/parndt/friendly_id', :branch => 'globalize3'
 
 # Specify additional Refinery CMS Engines here (all optional):
-gem 'refinerycms-generators',   '~> 0.9.9', :git => 'git://github.com/resolve/refinerycms-generators.git'
+gem 'refinerycms-generators',   :git => 'git://github.com/resolve/refinerycms-generators.git', :tag => '0.9.9.9'
 # gem 'refinerycms-inquiries',    '~> 0.9.9.9'
 # gem 'refinerycms-news',         '~> 0.9.9.6'
 # gem 'refinerycms-portfolio',    '~> 0.9.9'
