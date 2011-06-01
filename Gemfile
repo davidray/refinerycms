@@ -31,7 +31,7 @@ java = (RUBY_PLATFORM == 'java')
 # Specify the Refinery CMS core:
 gem 'refinerycms',              :path => '.'
 
-gem 'friendly_id_globalize3'
+gem 'friendly_id', '~> 3.2.0', :git => 'https://github.com/parndt/friendly_id.git'
 
 # Specify additional Refinery CMS Engines here (all optional):
 gem 'refinerycms-generators',   :git => 'git://github.com/resolve/refinerycms-generators.git', :tag => '0.9.9'

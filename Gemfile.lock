@@ -41,6 +41,13 @@ GIT
     refinerycms-generators (0.9.9)
       refinerycms (>= 0.9.9)
 
+GIT
+  remote: https://github.com/parndt/friendly_id.git
+  revision: 491398a9b60624a19ec27b69ce2d2c66c2a8c705
+  specs:
+    friendly_id (3.2.1.1)
+      babosa (~> 0.3.0)
+
 PATH
   remote: .
   specs:
@@ -121,10 +128,6 @@ GEM
     factory_girl (1.3.3)
     ffi (0.6.3)
       rake (>= 0.8.7)
-    friendly_id (3.2.1.1)
-      babosa (~> 0.3.0)
-    friendly_id_globalize3 (3.2.1.3)
-      babosa (~> 0.3.0)
     gherkin (2.3.3)
       json (~> 1.4.6)
     globalize3 (0.1.0)
@@ -216,7 +219,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   factory_girl
-  friendly_id_globalize3
+  friendly_id (~> 3.2.0)!
   gherkin
   json_pure (= 1.4.6a)!
   launchy
