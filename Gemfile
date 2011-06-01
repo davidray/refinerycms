@@ -44,7 +44,7 @@ gem 'refinerycms-generators',   :git => 'git://github.com/resolve/refinerycms-ge
 
 # Add i18n support (optional, you can remove this if you really want to).
 gem 'routing-filter',           :git => 'git://github.com/refinerycms/routing-filter.git'
-gem 'refinerycms-i18n',         :git => 'git://github.com/resolve/refinerycms-i18n.git'
+gem 'refinerycms-i18n',         '~> 0.9.9'
 
 gem 'jruby-openssl' if java
 

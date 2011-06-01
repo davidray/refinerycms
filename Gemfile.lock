@@ -41,14 +41,6 @@ GIT
     refinerycms-generators (0.9.9)
       refinerycms (>= 0.9.9)
 
-GIT
-  remote: git://github.com/resolve/refinerycms-i18n.git
-  revision: fd295b388c6476f65ec2a830e2c976e6b33980e0
-  specs:
-    refinerycms-i18n (0.9.9.7)
-      refinerycms (>= 0.9.8)
-      routing-filter (>= 0.2.3)
-
 PATH
   remote: .
   specs:
@@ -175,6 +167,9 @@ GEM
       thor (~> 0.14.4)
     rake (0.8.7)
     rdoc (3.6.1)
+    refinerycms-i18n (0.9.9.12)
+      refinerycms (>= 0.9.8)
+      routing-filter (>= 0.2.3)
     rspec (2.4.0)
       rspec-core (~> 2.4.0)
       rspec-expectations (~> 2.4.0)
@@ -228,7 +223,7 @@ DEPENDENCIES
   rack-test (~> 0.5.6)
   refinerycms!
   refinerycms-generators!
-  refinerycms-i18n!
+  refinerycms-i18n (~> 0.9.9)
   routing-filter!
   rspec-rails (~> 2.3)
   ruby-prof
