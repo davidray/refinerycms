@@ -48,7 +48,7 @@ PATH
       acts_as_indexed (~> 0.6.6)
       authlogic (~> 2.1.6)
       bundler (~> 1.0.5)
-      dragonfly (~> 0.9.4)
+      dragonfly (~> 0.9.5)
       friendly_id (~> 3.2.0)
       globalize3
       moretea-awesome_nested_set (= 1.4.3.1)
@@ -114,7 +114,7 @@ GEM
     culerity (0.2.15)
     database_cleaner (0.6.1)
     diff-lcs (1.1.2)
-    dragonfly (0.8.5)
+    dragonfly (0.9.5)
       rack
     erubis (2.6.6)
       abstract (>= 1.0.0)
